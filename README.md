@@ -1,5 +1,5 @@
 # Task-Discord-Bot
-Discord bot that will give you answers on coding tasks in SoftUni
+Discord bot that will give you answers on coding tasks that take place in SoftUni !!!
 
 you can copy the task name from https://judge.softuni.org/
 
