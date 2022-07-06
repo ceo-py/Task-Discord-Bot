@@ -78,17 +78,22 @@ async def task(ctx, *task):
 @client.command()
 async def help(ctx):
     embed = discord.Embed(
-        title="I task help center",
+        title="Bot Commands",
+        description="I task is a bot with two commands, made to help you find solutions "
+                    "on your coding journey from SoftUni.",
         colour=discord.Colour.gold()
     )
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/983670671647313930/994162444467445870"
             "/pnghut_customer-service-technical-support.png")
-    embed.add_field(name=f"With command - ?task [task name]",
-                    value=f"```fix\nYou can simply copy the task name from judge and paste it, "
-                          f"that will give you the code for that task if it`s found.```\n[Example]("
+    embed.add_field(name=f"?task [task name]",
+                    value=f"```fix\nWith that command you can ask for specific task. Simply copy the task name from judge and paste it, "
+                          f"that will show you the solution if it`s found. Check the example below. ```[Command example]("
                           f"https://cdn.discordapp.com/attachments/983670671647313930/994164354079539282/unknown.png)",
-                    inline=True)
+                    inline=False)
+    embed.add_field(name=f"?help",
+                    value=f"```fix\nThat`s what you are looking at the moment.Enjoy it!!!```",
+                    inline=False)
     await ctx.author.send(embed=embed)
 
 
