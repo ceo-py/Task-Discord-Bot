@@ -66,7 +66,8 @@ async def task(ctx, *task):
         respond = await look_for_answer(task)
         embed = discord.Embed(
             colour=discord.Colour.blue(),
-            description=f"**Answers i found:**\n\n{respond}"
+            title="**Answers i found:**",
+            description=f"{respond}"
         )
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/983670671647313930/994020525410111578/kisspng-python-"
