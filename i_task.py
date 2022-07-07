@@ -46,8 +46,17 @@ async def look_for_answer(question):
 
     except KeyError:
         for task, url in data_info.items():
-            if search_for[3:6] in task and len(result) < 800:
-                result += f"[{output_text}]({url})\n"
+            if len(result) <= 3850:
+                output_text = await prepare_text_for_output(task)
+                if search_for[0].isdigit():
+                    if search_for[2:6] in task:
+                        result += f"[{output_text}]({url})\n"
+                else:
+                    if search_for[:5] in task:
+                        result += f"[{output_text}]({url})\n"
+            else:
+                break
+
     return result
 
 
@@ -56,14 +65,14 @@ async def task(ctx, *task):
     if task:
         respond = await look_for_answer(task)
         embed = discord.Embed(
-            colour=discord.Colour.blue()
+            colour=discord.Colour.blue(),
+            description=f"**Answers i found:**\n\n{respond}"
         )
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/983670671647313930/994020525410111578/kisspng-python-"
                 "general-purpose-programming-language-comput-python-programming-language-symphony-solution-"
                 "5b6ee0c89ecd95.2067324515339931606505.png")
 
-        embed.add_field(name=f"**Answers i found:**", value=f"**{respond}**", inline=True)
         await ctx.author.send(embed=embed)
     else:
         embed = discord.Embed(
