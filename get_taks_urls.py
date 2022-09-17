@@ -19,10 +19,10 @@ def get_all_directories(url_start):
     htmldata = getdata(url_start)
     links = htmldata.html.absolute_links
     for info in links:
-        if "/tree/main/" in info != check_url.get(info, "None"):
+        if "/tree/main/" in info != check_url.get(info):
             check_url[info] = info
-            get_all_directories(info)
-        if ".py" in info:
+            get_all_directories(info) #
+        elif ".py" in info:
             my_links.append(info)
 
 
