@@ -1,7 +1,7 @@
 from requests_html import HTMLSession
 import json
 
-url_start = "https://github.com/ceo-py/softuni/tree/main/Fundamentals-Exams"
+url_start = "https://github.com/ceo-py/softuni"
 session = HTMLSession()
 
 
@@ -12,22 +12,18 @@ def getdata(url):
 
 htmldata = getdata(url_start)
 my_links = []
-set_for_links = set()
+check_url = {}
 
 
 def get_all_directories(url_start):
     htmldata = getdata(url_start)
     links = htmldata.html.absolute_links
-    if ".py" in url_start:
-        my_links.append(url_start)
-        return
-
-    for link in links:
-        if link not in set_for_links:
-            set_for_links.add(link)
-            if "test.py" not in link and ("https://github.com/ceo-py/softuni/tree/main/" in link or
-                                          "https://github.com/ceo-py/softuni/blob/main/" in link):
-                get_all_directories(link)
+    for info in links:
+        if "/tree/main/" in info != check_url.get(info, "None"):
+            check_url[info] = info
+            get_all_directories(info)
+        if ".py" in info:
+            my_links.append(info)
 
 
 def write_json(data, filename="data.json"):
