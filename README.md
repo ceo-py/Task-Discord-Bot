@@ -1,7 +1,7 @@
 # Task-Discord-Bot
 Discord bot that will give you answers on coding tasks that take place in SoftUni !!!
 
-you can copy the task name from https://judge.softuni.org/ and pm the bot with that name he will provide you the answer code on python.
+you can copy the task name from https://judge.softuni.org/ and pm the bot with that name he will provide you the answer code on python, java and c#.
 
 ![image](https://cdn.discordapp.com/attachments/983670671647313930/994164354079539282/unknown.png)
 
