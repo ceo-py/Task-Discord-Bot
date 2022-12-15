@@ -1,7 +1,7 @@
 from requests_html import HTMLSession
 import json
 
-url_start = "https://github.com/ceo-py/softuni"
+url_start = "https://github.com/ceo-py/softuni/tree/main/Python%20Advanced/Python%20Advanced%20-%20Exams"
 session = HTMLSession()
 
 
@@ -21,12 +21,12 @@ def get_all_directories(url_start):
     for info in links:
         if "/tree/main/" in info != check_url.get(info):
             check_url[info] = info
-            get_all_directories(info) #
+            get_all_directories(info)
         elif ".py" in info:
             my_links.append(info)
 
 
-def write_json(data, filename="data.json"):
+def write_json(data, filename="python_data.json"):
     with open(filename, "w", encoding='utf-8') as x:
         json.dump(data, x, indent=9)
 
@@ -40,10 +40,9 @@ for task in my_links:
     links_for_bd[task_name] = task
     print(task_name)
 
-with open("data.json", "r+", encoding='utf-8') as json_file:
+with open("python_data.json", "r+", encoding='utf-8') as json_file:
     data = json.load(json_file)
-    data_info = data["task"][0]
-    data_info.update(links_for_bd)
+    data.update(links_for_bd)
 
 write_json(data)
 
