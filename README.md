@@ -7,5 +7,7 @@ you can copy the task name from https://judge.softuni.org/ and pm the bot with t
 
 click on the link some of the tasks will have more than one solution.
 
-You can join this discord server - https://discord.gg/gCcfWpMCgE and start pm the bot.
+You can join this discord server - https://discord.gg/gCcfWpMCgE and start pm the bot or simply invite him to your discord server.
+
+
 ENJOY IT!!!
