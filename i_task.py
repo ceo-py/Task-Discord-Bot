@@ -5,10 +5,12 @@ import string
 from dotenv import load_dotenv
 from discord.ext import commands
 from datetime import datetime
+from data_base import DataBaseInfo
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 client = commands.Bot(command_prefix="?", help_command=None)
+db_ = DataBaseInfo()
 
 LANGUAGE_DATA = {
     "cs": {
@@ -59,37 +61,30 @@ async def prepare_text_for_output(text):
     return string.capwords(text.replace("_", " "))
 
 
-async def loading_answers_data(language: str):
-    with open(f"{language}_data.json", "r", encoding='utf-8') as json_file:
-        return json.load(json_file)
+@client.command()
+async def add(ctx, *data):
+    if str(ctx.author) in os.getenv("OWNER"):
+        await db_.add_task_to_db(data, ctx)
+        return
+
+    await ctx.author.send("```YOU DON`T HAVE PERMISSION TO ADD TASKS!!!```")
 
 
 async def look_for_answer(question, language):
-    data_info = await loading_answers_data(LANGUAGE_DATA[language]["data"])
     search_for = await clean_input(question)
-    output_text = await prepare_text_for_output(search_for)
-    result = ""
-    try:
-        url = data_info[search_for]
-        result = f"[{output_text}]({url})"
+    find_tasks = await db_.find_tasks(LANGUAGE_DATA[language]["data"], search_for)
+    result = []
 
-    except KeyError:
-        for task, url in data_info.items():
-            if len(result) <= 3850:
-                output_text = await prepare_text_for_output(task)
-                if search_for[0].isdigit():
-                    if search_for[2:6] in task:
-                        result += f"[{output_text}]({url})\n"
-                else:
-                    if search_for[:5] in task:
-                        result += f"[{output_text}]({url})\n"
-            else:
-                break
+    for show in find_tasks:
+        if sum(len(x) for x in result) <= 3850:
+            result.append(f"[{await prepare_text_for_output(show['task name'])}]({show['task url']})")
+        else:
+            break
 
-    return result
+    return "\n".join(result)
 
 
-async def show_result_message(task: str, ctx, language: str):
+async def show_result_message(task, ctx, language):
     if task:
         respond = await look_for_answer(task, language)
         if not respond:
