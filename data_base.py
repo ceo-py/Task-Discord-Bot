@@ -30,24 +30,14 @@ class DataBaseInfo(Singleton):
     def all_tasks(self, language: str):
         return self.client[language]
 
-    async def add_task_to_db(self, info: tuple, ctx: object):
-        if len(info) != 3:
-            await ctx.author.send("**Right format is:**```python 2_test_ http://test.com```")
-            return
-
-        language, task_name, url = info
-
-        if language not in ("python", "java", "cs", "js"):
-            await ctx.author.send("```Supported language`s are python, java, cs, js!!!```")
-            return
+    async def add_task_to_db(self, language, task_name, url):
 
         find_task = self.all_tasks(language).find_one({"$or": [{"task name": task_name}, {"task url": url}]})
         if find_task:
-            await ctx.author.send(f"**The task already exists as:** ```name - {find_task['task name']}\nurl - {find_task['task url']}```")
-            return
+            return f"**The task already exists as:**\n[{find_task['task name']}]({find_task['task url']})"
 
         self.all_tasks(language).insert_one({"task name": task_name, "task url": url})
-        await ctx.author.send(f"```The task was added to Data Base for {language.capitalize()}!!!```")
+        return f"**```The task was added to Data Base for {language.capitalize()}!!!```**"
 
     async def find_tasks(self, language: str, task_name: str):
         return list(self.all_tasks(language).find({"task name": {"$regex": task_name}}))
