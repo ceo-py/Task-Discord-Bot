@@ -2,6 +2,7 @@ import discord
 import os
 import json
 import string
+from discord import ui
 from dotenv import load_dotenv
 from discord.ext import commands
 from datetime import datetime
@@ -9,8 +10,20 @@ from data_base import DataBaseInfo
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
-client = commands.Bot(command_prefix="?", help_command=None)
 db_ = DataBaseInfo()
+
+
+class PersistentViewBot(commands.Bot):
+    def __init__(self):
+        intents = discord.Intents.all()
+
+        super().__init__(command_prefix="!", help_command=None, intents=intents)
+
+    async def setup_hook(self) -> None:
+        self.add_view(LanguageButtons())
+
+
+client = PersistentViewBot()
 
 LANGUAGE_DATA = {
     "cs": {
@@ -19,13 +32,17 @@ LANGUAGE_DATA = {
     },
     "py": {
         "thumbnail url": "https://cdn.discordapp.com/attachments/983670671647313930/994020525410111578/kisspng-python-"
-                "general-purpose-programming-language-comput-python-programming-language-symphony-solution-"
-                "5b6ee0c89ecd95.2067324515339931606505.png",
+                         "general-purpose-programming-language-comput-python-programming-language-symphony-solution-"
+                         "5b6ee0c89ecd95.2067324515339931606505.png",
         "data": "python"
     },
     "java": {
         "thumbnail url": "https://cdn.discordapp.com/attachments/983670671647313930/1052942041652404256/java.png",
         "data": "java"
+    },
+    "js": {
+        "thumbnail url": "https://cdn.discordapp.com/attachments/983670671647313930/1056201559102476318/pngwing.com.png",
+        "data": "js"
     },
 }
 
@@ -62,12 +79,12 @@ async def prepare_text_for_output(text):
 
 
 @client.command()
-async def add(ctx, *data):
+async def add(ctx):
     if str(ctx.author) in os.getenv("OWNER"):
-        await db_.add_task_to_db(data, ctx)
-        return
-
-    await ctx.author.send("```YOU DON`T HAVE PERMISSION TO ADD TASKS!!!```")
+        await ctx.send(embed=discord.Embed(
+            colour=discord.Colour.blue(),
+            title="** Click on language to add task in database ** :warning: "
+        ), view=LanguageButtons())
 
 
 async def look_for_answer(question, language):
@@ -88,7 +105,7 @@ async def show_result_message(task, ctx, language):
     if task:
         respond = await look_for_answer(task, language)
         if not respond:
-            respond = "No results found.\nYou can use ?help for more information."
+            respond = "No results found.\nYou can use **?help** for more information."
         embed = discord.Embed(
             colour=discord.Colour.blue(),
             title="**Answers I found:**",
@@ -104,15 +121,15 @@ async def show_result_message(task, ctx, language):
             colour=discord.Colour.blue()
         )
         embed.add_field(name=f"**Examples:**:point_down:", value=f"```fix\n"
-                                                                f"?{language} 9 Palindrome Integers\n"
-                                                                f"?{language} 9 Palindrome\n"
-                                                                f"?{language} Palindrome```",
+                                                                 f"?{language} 9 Palindrome Integers\n"
+                                                                 f"?{language} 9 Palindrome\n"
+                                                                 f"?{language} Palindrome```",
                         inline=True)
         await ctx.author.send(embed=embed)
     await add_stats()
 
 
-@client.command(aliases=['py', "cs", "java"])
+@client.command(aliases=['py', "cs", "java", "js"])
 async def task(ctx, *task):
     await show_result_message(task, ctx, ctx.invoked_with)
 
@@ -127,11 +144,12 @@ async def help(ctx):
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/983670671647313930/994162444467445870"
             "/pnghut_customer-service-technical-support.png")
-    embed.add_field(name=f"?task or py [task name] - Python\ncs [task name] - for C#",
+    embed.add_field(name=f"?py task name - for Python\n?cs task name - for C#\n"
+                         f"?java task name - for Java",
                     value=f"```fix\nWhen you ask me for a task by its full name "
                           f"(or at least part of its name) I will search for it and show you the results. "
                           f"If you are not sure how to ask me - see the example below.```[Command example]("
-                          f"https://cdn.discordapp.com/attachments/983670671647313930/1018789872347131904/unknown.png)",
+                          f"https://cdn.discordapp.com/attachments/983670671647313930/1056160608917131294/image.png)",
                     inline=False)
     embed.add_field(name=f"?help",
                     value=f"```fix\nHave no fear - I task is here! Oops - I have said that already, ain't I? "
@@ -142,15 +160,51 @@ async def help(ctx):
 
 @client.command()
 async def stats(ctx):
-    with open("stats.json", "r", encoding='utf-8') as stats:
-        data = json.load(stats)
-        embed = discord.Embed(
-            title=f":warning:Total Answers:warning:",
-            description=f"{sum(list(data.values()))}",
-            colour=discord.Colour.blue()
-        )
+    if str(ctx.author) in os.getenv("OWNER"):
+        with open("stats.json", "r", encoding='utf-8') as stats:
+            data = json.load(stats)
+            embed = discord.Embed(
+                title=f":warning:Total Answers:warning:",
+                description=f"{sum(data.values())}",
+                colour=discord.Colour.blue()
+            )
 
-        await ctx.author.send(embed=embed)
+            await ctx.author.send(embed=embed)
+
+
+class LanguageButtons(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="Python", style=discord.ButtonStyle.gray, custom_id="1", emoji="\U0001F40D")
+    async def python(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await button.response.send_modal(AddTaskModal("python"))
+
+    @discord.ui.button(label="C#", style=discord.ButtonStyle.gray, custom_id="2", emoji="\U0001F648")
+    async def cs(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await button.response.send_modal(AddTaskModal("cs"))
+
+    @discord.ui.button(label="JAVA", style=discord.ButtonStyle.gray, custom_id="3", emoji="\U0001F649")
+    async def java(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await button.response.send_modal(AddTaskModal("java"))
+
+    @discord.ui.button(label="JS", style=discord.ButtonStyle.gray, custom_id="4", emoji="\U0001F64A")
+    async def js(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await button.response.send_modal(AddTaskModal("js"))
+
+
+class AddTaskModal(ui.Modal, title="Add task to database"):
+    task_name = ui.TextInput(label='Task name from Judge', placeholder="Replace space and extra characters with _",
+                             max_length=40)
+    task_urls = ui.TextInput(label='Task URL', placeholder="Paste the URL link on the task solution", max_length=500)
+
+    def __init__(self, language):
+        super().__init__()
+        self.language = language
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(
+            f"{await db_.add_task_to_db(self.language, self.task_name.value, self.task_urls.value)}", ephemeral=True)
 
 
 client.run(TOKEN)
