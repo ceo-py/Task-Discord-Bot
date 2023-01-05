@@ -41,3 +41,6 @@ class DataBaseInfo(Singleton):
 
     async def find_tasks(self, language: str, task_name: str):
         return list(self.all_tasks(language).find({"task name": {"$regex": task_name}}))
+
+
+db_ = DataBaseInfo()

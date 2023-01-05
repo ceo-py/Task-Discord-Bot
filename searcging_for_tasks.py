@@ -1,7 +1,7 @@
 import json
 
 
-with open("data.json", "r+", encoding='utf-8') as json_file:
+with open("python_data.json", "r+", encoding='utf-8') as json_file:
     data = json.load(json_file)
     data_info = data["task"][0]
 

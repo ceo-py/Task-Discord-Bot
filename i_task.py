@@ -1,23 +1,15 @@
-import discord
-import os
 import json
-import string
-from discord import ui
-from dotenv import load_dotenv
 from discord.ext import commands
 from datetime import datetime
-from data_base import DataBaseInfo
-
-load_dotenv()
-TOKEN = os.getenv("TOKEN")
-db_ = DataBaseInfo()
+from text_cleaning.string_cleaning import StringCleaning as Sc
+from buttons.language_bttons import LanguageButtons, discord, db_, os
 
 
 class PersistentViewBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.all()
 
-        super().__init__(command_prefix="!", help_command=None, intents=intents)
+        super().__init__(command_prefix="?", help_command=None, intents=intents)
 
     async def setup_hook(self) -> None:
         self.add_view(LanguageButtons())
@@ -65,19 +57,6 @@ async def add_stats():
         json.dump(data, x, indent=9)
 
 
-async def clean_input(data):
-    search_for = ' '.join(data)
-    search_for = search_for.rstrip().lstrip().replace(". ", "_").replace(" ", "_") \
-        .replace("-", "_").replace("'", "").lower()
-    if search_for.startswith("0"):
-        search_for = search_for.replace("0", "")
-    return search_for
-
-
-async def prepare_text_for_output(text):
-    return string.capwords(text.replace("_", " "))
-
-
 @client.command()
 async def add(ctx):
     if str(ctx.author) in os.getenv("OWNER"):
@@ -85,20 +64,6 @@ async def add(ctx):
             colour=discord.Colour.blue(),
             title="** Click on language to add task in database ** :warning: "
         ), view=LanguageButtons())
-
-
-async def look_for_answer(question, language):
-    search_for = await clean_input(question)
-    find_tasks = await db_.find_tasks(LANGUAGE_DATA[language]["data"], search_for)
-    result = []
-
-    for show in find_tasks:
-        if sum(len(x) for x in result) <= 3850:
-            result.append(f"[{await prepare_text_for_output(show['task name'])}]({show['task url']})")
-        else:
-            break
-
-    return "\n".join(result)
 
 
 async def show_result_message(task, ctx, language):
@@ -172,39 +137,17 @@ async def stats(ctx):
             await ctx.author.send(embed=embed)
 
 
-class LanguageButtons(discord.ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
+async def look_for_answer(question, language):
+    search_for = await Sc.clean_input(question)
+    find_tasks = await db_.find_tasks(LANGUAGE_DATA[language]["data"], search_for)
+    result = []
 
-    @discord.ui.button(label="Python", style=discord.ButtonStyle.gray, custom_id="1", emoji="\U0001F40D")
-    async def python(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await button.response.send_modal(AddTaskModal("python"))
+    for show in find_tasks:
+        if sum(len(x) for x in result) <= 3850:
+            result.append(f"[{await Sc.prepare_text_for_output(show['task name'])}]({show['task url']})")
+        else:
+            break
 
-    @discord.ui.button(label="C#", style=discord.ButtonStyle.gray, custom_id="2", emoji="\U0001F648")
-    async def cs(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await button.response.send_modal(AddTaskModal("cs"))
+    return "\n".join(result)
 
-    @discord.ui.button(label="JAVA", style=discord.ButtonStyle.gray, custom_id="3", emoji="\U0001F649")
-    async def java(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await button.response.send_modal(AddTaskModal("java"))
-
-    @discord.ui.button(label="JS", style=discord.ButtonStyle.gray, custom_id="4", emoji="\U0001F64A")
-    async def js(self, button: discord.ui.Button, interaction: discord.Interaction):
-        await button.response.send_modal(AddTaskModal("js"))
-
-
-class AddTaskModal(ui.Modal, title="Add task to database"):
-    task_name = ui.TextInput(label='Task name from Judge', placeholder="Replace space and extra characters with _",
-                             max_length=40)
-    task_urls = ui.TextInput(label='Task URL', placeholder="Paste the URL link on the task solution", max_length=500)
-
-    def __init__(self, language):
-        super().__init__()
-        self.language = language
-
-    async def on_submit(self, interaction: discord.Interaction):
-        await interaction.response.send_message(
-            f"{await db_.add_task_to_db(self.language, self.task_name.value, self.task_urls.value)}", ephemeral=True)
-
-
-client.run(TOKEN)
+client.run(os.getenv("TOKEN"))
