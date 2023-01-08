@@ -20,3 +20,7 @@ class LanguageButtons(discord.ui.View):
     @discord.ui.button(label="JS", style=discord.ButtonStyle.gray, custom_id="4", emoji="<:js:1058020780086140978>")
     async def js(self, button: discord.ui.Button, interaction: discord.Interaction):
         await button.response.send_modal(AddTaskModal("js"))
+
+    @discord.ui.button(label="HTML CSS", style=discord.ButtonStyle.gray, custom_id="6", emoji="<:html_css:1061701991144894554>")
+    async def html_css(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await button.response.send_modal(AddTaskModal("html_css"))
