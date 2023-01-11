@@ -23,7 +23,6 @@ class Singleton:
 
 
 class DataBaseInfo(Singleton):
-
     def __init__(self):
         self.client = db_connection()
 
@@ -32,12 +31,16 @@ class DataBaseInfo(Singleton):
 
     async def add_task_to_db(self, language, task_name, url):
 
-        find_task = self.all_tasks(language).find_one({"$or": [{"task name": task_name}, {"task url": url}]})
+        find_task = self.all_tasks(language).find_one(
+            {"$or": [{"task name": task_name}, {"task url": url}]}
+        )
         if find_task:
             return f"**The task already exists as:**\n[{find_task['task name']}]({find_task['task url']})"
 
         self.all_tasks(language).insert_one({"task name": task_name, "task url": url})
-        return f"**```The task was added to Data Base for {language.capitalize()}!!!```**"
+        return (
+            f"**```The task was added to Data Base for {language.capitalize()}!!!```**"
+        )
 
     async def find_tasks(self, language: str, task_name: str):
         return list(self.all_tasks(language).find({"task name": {"$regex": task_name}}))
