@@ -8,6 +8,14 @@ Installation:
 All you have to do is invite the bot to your discord server and be in a server where the bot is present.
 
 If you are looking for Python solutions, use: 
+
+```code
+/itask
+```
+![image](https://cdn.discordapp.com/attachments/983670671647313930/1062845907558727810/image.png)
+
+From here you can click on the language and search for solution on given task.
+
 ```code
 ?py task name
 ```
