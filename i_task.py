@@ -41,6 +41,11 @@ async def add(ctx):
 
 @client.command(aliases=["py", "cs", "java", "js", "html"])
 async def task(ctx, *task):
+
+    if ctx.invoked_with == "task":
+        await ctx.author.send(embed=embed_for_itask(), view=LanguageSearchingButtons())
+        return
+
     await ctx.author.send(embed=await show_result_message(task, ctx.invoked_with))
 
 
@@ -126,11 +131,8 @@ async def percent(interaction: discord.Interaction):
     name="itask", description="It will show you how to use the bot for task solutions."
 )
 async def itask(interaction: discord.Interaction):
-    embed = discord.Embed(
-        title="Показвам примерни решения на задачите от СофтУни!",
-        description="Изберете езика за който желаете да намерите пример.",
-        colour=discord.Colour.gold(),
-    )
+    embed = embed_for_itask()
+
     await interaction.response.send_message(
         embed=embed, view=LanguageSearchingButtons()
     )
@@ -146,6 +148,17 @@ async def stats(ctx):
             colour=discord.Colour.blue(),
         )
         await ctx.author.send(embed=embed)
+
+
+def embed_for_itask():
+    embed = discord.Embed(
+        title="Показвам примерни решения на задачите от СофтУни!",
+        description="Изберете езика за който желаете да намерите пример и напишете името на задача.\n"
+        "Ако желаете може да ми задавате въпроси на лично съобщение с команда за съответния език "
+        "`?py`, `?cs`, `?java` или `?html` и името на задачата.",
+        colour=discord.Colour.gold(),
+    )
+    return embed
 
 
 client.run(os.getenv("TOKEN"))
