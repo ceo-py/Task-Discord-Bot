@@ -10,7 +10,7 @@ class PersistentViewBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.all()
 
-        super().__init__(command_prefix="?", help_command=None, intents=intents)
+        super().__init__(command_prefix="??", help_command=None, intents=intents)
 
     async def setup_hook(self) -> None:
         self.add_view(LanguageButtons())
@@ -87,6 +87,45 @@ async def help(ctx):
 
 
 @client.tree.command(
+    name="rounding", description="Link with info about rounding!"
+)
+async def rounding(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="**Закръгление!!!**",
+        description="При използване на **f2/2f/2** цифрата 2 представлява колко знака след "
+                    "десетичната точка желаем да покажем! За всички езици когато желаем да е "
+                    "до най-близкото цяло число **надолу (3.87 -> 3)** може да използваме директно INT. "
+                    "При желание да покажете абсолютна стойност ползвайте **ABS (Math.abs / abs())**\n\n"
+                    "**Python**```py\n"
+                    "import math\n"
+                    "x = 3.14159\n"
+                    "print(f'{x:.2f}') # 3.14\n"
+                    "print(math.floor(x)) # 3\n"
+                    "print(math.ceil(x)) # 4```\n"
+                    "**C#**```cs\n"
+                    "double x = 3.14159;\n"
+                    "Console.WriteLine($\"{x:f2}\"); // 3.14\n"
+                    "Console.WriteLine(Math.Floor(x)); // 3\n"
+                    "Console.WriteLine(Math.Ceiling(x)); // 4```\n"
+                    "**JAVA**```java\n"
+                    "double x = 3.14159;\n"
+                    "System.out.printf(\"Total: %.2f\", x); // 3.14\n"
+                    "System.out.println(Math.floor(x)); // 3.0\n"
+                    "System.out.println(Math.ceil(x)); // 4.0```\n"
+                    "**JS**```js\n"
+                    "let x = 3.14159;\n"
+                    "console.log(x.toFixed(2)); // 3.14\n"
+                    "console.log(Math.floor(x)); // 3\n"
+                    "console.log(Math.ceil(x)); // 4```\n",
+        colour=discord.Colour.gold(),
+    )
+    embed.set_thumbnail(
+        url="https://cdn.discordapp.com/attachments/983670671647313930/1068903570335879318/rounding_23.png"
+    )
+    await interaction.response.send_message(embed=embed)
+
+
+@client.tree.command(
     name="percent", description="Link with info about calculating percents!"
 )
 async def percent(interaction: discord.Interaction):
@@ -114,6 +153,20 @@ async def percent(interaction: discord.Interaction):
         name="**Пример: 2**",
         value="Имаме промоция 8% на стока на цена 200 лв. Използваме следната формула:"
         " **__200 х 8 / 100 = 16 лв__**. Следователно цената на стоката е 184 лв.",
+        inline=False,
+    )
+    embed.add_field(
+        name="**Пример: 3**",
+        value="**98 * 0.9 = 88.2** - Намаляме числото 98 с 10%.\n"
+              "**98 * 0.73 = 71.54** - Намаляме числото 98 с 27%.\n"
+              "Видно от примерa за намалениe числото започва с 0. "
+              "след това процента с които желаете да намалите числото ако е примерно 15%. "
+              "100 - 15 = 85 или 0.85 * желаното число.\n"
+              "**98 * 1.10 = 107.8** - Увеличаваме числото 98 с 10%.\n"
+              "**98 * 1.35 = 132.3** - Увеличаваме числото 98 с 35%.\n"
+              "За увеличение число започва с 1. "
+              "след това процента с които желаем да направим увеличението. "
+              "Примерно 47% ще бъде 1.47 * желаното число.",
         inline=False,
     )
     embed.add_field(
