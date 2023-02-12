@@ -25,6 +25,10 @@ LANGUAGE_DATA = {
         "thumbnail url": "https://cdn.discordapp.com/attachments/983670671647313930/1061697692587266158/pngfind.com-javascript-logo-png-1506020.png",
         "data": "html_css",
     },
+    "mssql": {
+        "thumbnail url": "https://cdn.discordapp.com/attachments/983670671647313930/1070267493379227729/pngwing.com.png",
+        "data": "mssql",
+    },
 }
 
 

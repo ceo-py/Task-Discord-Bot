@@ -39,7 +39,7 @@ async def add(ctx):
         )
 
 
-@client.command(aliases=["py", "cs", "java", "js", "html"])
+@client.command(aliases=["py", "cs", "java", "js", "html", "mssql"])
 async def task(ctx, *task):
 
     if ctx.invoked_with == "task":
@@ -206,7 +206,7 @@ def embed_for_itask():
         title="Показвам примерни решения на задачите от СофтУни!",
         description="Изберете езика за който желаете да намерите пример и напишете името на задача.\n"
         "Ако желаете може да ми задавате въпроси на лично съобщение <@970393820497838180> с команда за съответния език "
-        "`?py`, `?cs`, `?java` или `?html` и името на задачата.",
+        "`?py`, `?cs`, `?java`, `?html` или `?mssql` и името на задачата.",
         colour=discord.Colour.gold(),
     )
     return embed

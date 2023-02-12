@@ -20,6 +20,7 @@ class LanguageSearchingButtons(discord.ui.View):
         custom_id="101",
         emoji="<:cs:1058018616777383966>",
     )
+
     async def cs(self, button: discord.ui.Button, interaction: discord.Interaction):
         await button.response.send_modal(TaskName("cs"))
 
@@ -48,6 +49,15 @@ class LanguageSearchingButtons(discord.ui.View):
         emoji="<:html_css:1061701991144894554>",
     )
     async def html_css(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+            self, button: discord.ui.Button, interaction: discord.Interaction
     ):
         await button.response.send_modal(TaskName("html"))
+
+    @discord.ui.button(
+        label="MSSQL",
+        style=discord.ButtonStyle.gray,
+        custom_id="105",
+        emoji="<:mssql:1070269021003468800>",
+    )
+    async def mssql(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await button.response.send_modal(TaskName("mssql"))

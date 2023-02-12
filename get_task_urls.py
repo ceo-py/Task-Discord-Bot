@@ -1,8 +1,11 @@
 from requests_html import HTMLSession
 import json
 
-url_start = "https://github.com/ceo-py/softuni/tree/main/Python%20Advanced/Python%20Advanced%20-%20Exams"
+url_start = "https://github.com/ceo-py/SoftUni-MS-MSQL"
 session = HTMLSession()
+FILE_EXTENSION = '.sql'
+FILE = "mssql"
+SYMBOLS_BEHIND_EXTENSIONS = -len(FILE_EXTENSION)
 
 
 def getdata(url):
@@ -22,11 +25,11 @@ def get_all_directories(url_start):
         if "/tree/main/" in info != check_url.get(info):
             check_url[info] = info
             get_all_directories(info)
-        elif ".py" in info:
+        elif info.endswith(FILE_EXTENSION):
             my_links.append(info)
 
 
-def write_json(data, filename="python_data.json"):
+def write_json(data, filename=f"{FILE}.json"):
     with open(filename, "w", encoding='utf-8') as x:
         json.dump(data, x, indent=9)
 
@@ -36,11 +39,11 @@ get_all_directories(url_start)
 for task in my_links:
     print(task)
     taks_start_index = task.rfind("/") + 1
-    task_name = task[taks_start_index:-3]
+    task_name = task[taks_start_index:SYMBOLS_BEHIND_EXTENSIONS]
     links_for_bd[task_name] = task
     print(task_name)
 
-with open("python_data.json", "r+", encoding='utf-8') as json_file:
+with open(f"{FILE}.json", "r+", encoding='utf-8') as json_file:
     data = json.load(json_file)
     data.update(links_for_bd)
 

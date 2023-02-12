@@ -51,3 +51,14 @@ class LanguageButtons(discord.ui.View):
         self, button: discord.ui.Button, interaction: discord.Interaction
     ):
         await button.response.send_modal(AddTaskModal("html_css"))
+
+    @discord.ui.button(
+        label="MSSQL",
+        style=discord.ButtonStyle.gray,
+        custom_id="7",
+        emoji="<:mssql:1070269021003468800>",
+    )
+    async def mssql(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ):
+        await button.response.send_modal(AddTaskModal("mssql"))
