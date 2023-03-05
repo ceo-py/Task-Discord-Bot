@@ -1,10 +1,10 @@
 from requests_html import HTMLSession
 import json
 
-url_start = "https://github.com/ceo-py/SoftUni-MS-MSQL"
+url_start = "https://github.com/ceo-py/JavaScript"
 session = HTMLSession()
-FILE_EXTENSION = '.sql'
-FILE = "mssql"
+FILE_EXTENSION = '.js'
+FILE = "js"
 SYMBOLS_BEHIND_EXTENSIONS = -len(FILE_EXTENSION)
 
 
@@ -22,7 +22,7 @@ def get_all_directories(url_start):
     htmldata = getdata(url_start)
     links = htmldata.html.absolute_links
     for info in links:
-        if "/tree/main/" in info != check_url.get(info):
+        if "/tree/master/" in info != check_url.get(info):
             check_url[info] = info
             get_all_directories(info)
         elif info.endswith(FILE_EXTENSION):

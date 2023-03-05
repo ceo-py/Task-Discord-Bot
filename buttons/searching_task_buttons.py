@@ -33,14 +33,14 @@ class LanguageSearchingButtons(discord.ui.View):
     async def java(self, button: discord.ui.Button, interaction: discord.Interaction):
         await button.response.send_modal(TaskName("java"))
 
-    # @discord.ui.button(
-    #     label="JS",
-    #     style=discord.ButtonStyle.gray,
-    #     custom_id="103",
-    #     emoji="<:js:1058020780086140978>",
-    # )
-    # async def js(self, button: discord.ui.Button, interaction: discord.Interaction):
-    #     await button.response.send_modal(TaskName("js"))
+    @discord.ui.button(
+        label="JS",
+        style=discord.ButtonStyle.gray,
+        custom_id="103",
+        emoji="<:js:1058020780086140978>",
+    )
+    async def js(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await button.response.send_modal(TaskName("js"))
 
     @discord.ui.button(
         label="HTML CSS",

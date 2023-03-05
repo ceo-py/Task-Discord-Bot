@@ -4,6 +4,9 @@ from buttons.searching_task_buttons import LanguageSearchingButtons
 from buttons.language_buttons import LanguageButtons, discord, os
 from prepare_answer.generate_message import show_result_message
 from stats.add_stats_json import load_stats
+from select_menus.select import Select, exams
+
+
 
 
 class PersistentViewBot(commands.Bot):
@@ -46,7 +49,7 @@ async def task(ctx, *task):
         await ctx.author.send(embed=embed_for_itask(), view=LanguageSearchingButtons())
         return
 
-    await ctx.author.send(embed=await show_result_message(task, ctx.invoked_with))
+    await ctx.author.send(embed=await show_result_message(task, ctx.invoked_with, exams))
 
 
 @client.command()
@@ -64,7 +67,8 @@ async def help(ctx):
         name=f"?py task name - for Python\n?cs task name - for C#\n"
         f"?java task name - for Java\n"
         f"?js task name - for JavaScript\n"
-        f"?html task name - for html and css",
+        f"?html task name - for html and css\n"
+        f"?mssql task name - for MS-MSQL",
         value=f"```fix\nWhen you ask me for a task by its full name "
         f"(or at least part of its name) I will search for it and show you the results. "
         f"If you are not sure how to ask me - see the example below.```[Command example]("
@@ -206,10 +210,27 @@ def embed_for_itask():
         title="Показвам примерни решения на задачите от СофтУни!",
         description="Изберете езика за който желаете да намерите пример и напишете името на задача.\n"
         "Ако желаете може да ми задавате въпроси на лично съобщение <@970393820497838180> с команда за съответния език "
-        "`?py`, `?cs`, `?java`, `?html` или `?mssql` и името на задачата.",
+        "`?py`, `?cs`, `?java`, `?js`, `?html` или `?mssql` и името на задачата.",
         colour=discord.Colour.gold(),
     )
     return embed
+
+
+def embed_for_itask_exam():
+    embed = discord.Embed(
+        title="Провеждат се изпити към момента!!!",
+        description="С цел да се осигури нормалното протичане на изпитите, бота няма да дава отгорови до приключването им.\n"
+                    "Благодаря за разбирането и успех на изпита!",
+        colour=discord.Colour.red(),
+    )
+    return embed
+
+
+@client.tree.command(name="exam")
+async def test(interaction: discord.Interaction):
+
+    if str(interaction.user) in os.getenv("OWNER"):
+        await interaction.response.send_message(view=Select())
 
 
 client.run(os.getenv("TOKEN"))

@@ -32,10 +32,10 @@ LANGUAGE_DATA = {
 }
 
 
-async def show_result_message(task, language):
+async def show_result_message(task, language, skip_moduls):
 
     if task:
-        respond = await look_for_answer(task, LANGUAGE_DATA[language]["data"])
+        respond = await look_for_answer(task, LANGUAGE_DATA[language]["data"], skip_moduls)
         if not respond:
             respond = "No results found.\nYou can use **?help** for more information."
         embed = discord.Embed(
