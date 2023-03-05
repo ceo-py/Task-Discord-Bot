@@ -229,7 +229,7 @@ def embed_for_itask_exam():
 @client.tree.command(name="exam")
 async def test(interaction: discord.Interaction):
 
-    if str(interaction.user) in os.getenv("OWNER"):
+    if str(interaction.user) in os.getenv("OWNER") or str(interaction.user) in os.getenv("PERMIT"):
         await interaction.response.send_message(view=Select())
 
 
