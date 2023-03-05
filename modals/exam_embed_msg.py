@@ -1,7 +1,6 @@
 import discord
 
 
-
 class AddEmbedModal(discord.ui.Modal, title="Add additional information for Exam"):
     msg_text = discord.ui.TextInput(
         label="Custom message for embed when there are Exams",
@@ -14,6 +13,6 @@ class AddEmbedModal(discord.ui.Modal, title="Add additional information for Exam
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(
-            'Selected modules was disabled for searching!',
+            "Selected modules was disabled for searching!",
             ephemeral=True,
         )

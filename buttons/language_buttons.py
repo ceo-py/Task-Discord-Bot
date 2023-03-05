@@ -58,7 +58,5 @@ class LanguageButtons(discord.ui.View):
         custom_id="7",
         emoji="<:mssql:1070269021003468800>",
     )
-    async def mssql(
-        self, button: discord.ui.Button, interaction: discord.Interaction
-    ):
+    async def mssql(self, button: discord.ui.Button, interaction: discord.Interaction):
         await button.response.send_modal(AddTaskModal("mssql"))

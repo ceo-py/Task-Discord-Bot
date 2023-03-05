@@ -82,7 +82,9 @@ class SelectMenu(discord.ui.Select):
                     exams.add_module(module)
 
             await interaction.response.send_message(
-                content=f'Selected modules was disabled for searching! -> {", ".join(exams.modules)}', ephemeral=True)
+                content=f'Selected modules was disabled for searching! -> {", ".join(exams.modules)}',
+                ephemeral=True,
+            )
 
 
 class Select(discord.ui.View):

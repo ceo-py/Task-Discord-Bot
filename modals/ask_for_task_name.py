@@ -4,6 +4,7 @@ from prepare_answer.generate_message import show_result_message
 from prepare_answer.looking_for_answer import look_for_answer
 from select_menus.select import exams
 
+
 class TaskName(discord.ui.Modal, title="Търсене на примерни решения!"):
     task_name = discord.ui.TextInput(
         label="Името на задачата в SoftUni Judge?",
@@ -17,6 +18,8 @@ class TaskName(discord.ui.Modal, title="Търсене на примерни р�
 
     async def on_submit(self, interaction: discord.Interaction):
         await interaction.response.send_message(
-            embed=await show_result_message((self.task_name.value,), self.language, exams),
+            embed=await show_result_message(
+                (self.task_name.value,), self.language, exams
+            ),
             ephemeral=True,
         )

@@ -7,8 +7,6 @@ from stats.add_stats_json import load_stats
 from select_menus.select import Select, exams
 
 
-
-
 class PersistentViewBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.all()
@@ -49,7 +47,9 @@ async def task(ctx, *task):
         await ctx.author.send(embed=embed_for_itask(), view=LanguageSearchingButtons())
         return
 
-    await ctx.author.send(embed=await show_result_message(task, ctx.invoked_with, exams))
+    await ctx.author.send(
+        embed=await show_result_message(task, ctx.invoked_with, exams)
+    )
 
 
 @client.command()
@@ -220,7 +220,7 @@ def embed_for_itask_exam():
     embed = discord.Embed(
         title="Провеждат се изпити към момента!!!",
         description="С цел да се осигури нормалното протичане на изпитите, бота няма да дава отгорови до приключването им.\n"
-                    "Благодаря за разбирането и успех на изпита!",
+        "Благодаря за разбирането и успех на изпита!",
         colour=discord.Colour.red(),
     )
     return embed
@@ -229,7 +229,9 @@ def embed_for_itask_exam():
 @client.tree.command(name="exam")
 async def test(interaction: discord.Interaction):
 
-    if str(interaction.user) in os.getenv("OWNER") or str(interaction.user) in os.getenv("PERMIT"):
+    if str(interaction.user) in os.getenv("OWNER") or str(
+        interaction.user
+    ) in os.getenv("PERMIT"):
         await interaction.response.send_message(view=Select())
 
 

@@ -9,7 +9,9 @@ async def look_for_answer(question: str, language: str, skip_moduls: object) -> 
 
     for show in find_tasks:
 
-        if sum(len(x) for x in result) <= 3650 and not exams(show['task url'], skip_moduls.exam):
+        if sum(len(x) for x in result) <= 3650 and not exams(
+            show["task url"], skip_moduls.exam
+        ):
             result.append(
                 f"[{await Sc.prepare_text_for_output(show['task name'])}]({show['task url']})"
             )
@@ -19,7 +21,8 @@ async def look_for_answer(question: str, language: str, skip_moduls: object) -> 
     if skip_moduls.modules:
         result.append(
             f'\n\nВ момента се провеждат изпити по следните модули: `{", ".join(skip_moduls.modules)}`. С цел да '
-            f'се осигури нормалното протичане на изпита, показване на решения от въпросните модули е изключено, до приключването им.')
+            f"се осигури нормалното протичане на изпита, показване на решения от въпросните модули е изключено, до приключването им."
+        )
 
     return "\n".join(result)
 
