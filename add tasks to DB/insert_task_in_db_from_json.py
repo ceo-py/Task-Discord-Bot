@@ -18,14 +18,19 @@ def db_connection():
 
 db_ = db_connection()
 
-with open(f"{FILE}.json", "r+", encoding='utf-8') as json_file:
-    data = json.load(json_file)
+with open(f"{FILE}.json", "r+", encoding="utf-8") as json_file:
+    # data = json.load(json_file)
 
-    for task_name, url in data.items():
+    # for task_name, url in data.items():
+    #
+    #     find_task = db_.find_one(
+    #         {"$or": [{"task name": task_name}, {"task url": url}]}
+    #     )
+    #     if not find_task:
+    #         db_.insert_one({"task name": task_name, "task url": url})
 
-        find_task = db_.find_one(
-            {"$or": [{"task name": task_name}, {"task url": url}]}
-        )
-        if not find_task:
-
-            db_.insert_one({"task name": task_name, "task url": url})
+    [
+        db_.insert_one({"task name": task_name, "task url": url})
+        for task_name, url in json.load(json_file).items()
+        if db_.find_one({"$or": [{"task name": task_name}, {"task url": url}]})
+    ]

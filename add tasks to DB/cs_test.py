@@ -1,7 +1,9 @@
 from requests_html import HTMLSession
 import json
 
-url_start = "https://github.com/AlexanderRVulchev/SoftUni-Exams/tree/main/CSharp-Advanced"
+url_start = (
+    "https://github.com/AlexanderRVulchev/SoftUni-Exams/tree/main/CSharp-Advanced"
+)
 session = HTMLSession()
 
 
@@ -31,8 +33,8 @@ def get_all_directories(url_start):
             end = info_key.rfind("/") + 1
             info_key = info_key[end:]
             print(info_key)
-            test_name = ''.join(x for x in info_key if x.isalpha()).lower()
-            file_name = info[info.rfind("/") + 1:][:-3].lower()
+            test_name = "".join(x for x in info_key if x.isalpha()).lower()
+            file_name = info[info.rfind("/") + 1 :][:-3].lower()
             print("test name", test_name)
             print("file name", file_name)
             # if test_name == file_name:
@@ -49,13 +51,13 @@ def get_all_directories(url_start):
 
 
 def write_json(data, filename="cs_data.json"):
-    with open(filename, "w", encoding='utf-8') as x:
+    with open(filename, "w", encoding="utf-8") as x:
         json.dump(data, x, indent=9)
 
 
 get_all_directories(url_start)
 
-with open("../cs_data.json", "r+", encoding='utf-8') as json_file:
+with open("../cs_data.json", "r+", encoding="utf-8") as json_file:
     data = json.load(json_file)
     data_info = data
     data_info.update(links_for_bd)
@@ -64,10 +66,10 @@ write_json(data)
 
 print(len(links_for_bd))
 
-'''
+"""
 1. Diagonal Difference
-'''
+"""
 
-'''
+"""
 1.%20Diagonal%20Difference
-'''
+"""

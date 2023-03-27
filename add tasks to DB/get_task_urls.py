@@ -3,7 +3,7 @@ import json
 
 url_start = "https://github.com/ceo-py/JS-Front-End"
 session = HTMLSession()
-FILE_EXTENSION = '.js'
+FILE_EXTENSION = ".js"
 FILE = "js"
 SYMBOLS_BEHIND_EXTENSIONS = -len(FILE_EXTENSION)
 
@@ -30,7 +30,7 @@ def get_all_directories(url_start):
 
 
 def write_json(data, filename=f"{FILE}.json"):
-    with open(filename, "w", encoding='utf-8') as x:
+    with open(filename, "w", encoding="utf-8") as x:
         json.dump(data, x, indent=9)
 
 
@@ -43,7 +43,7 @@ for task in my_links:
     links_for_bd[task_name] = task
     print(task_name)
 
-with open(f"{FILE}.json", "r+", encoding='utf-8') as json_file:
+with open(f"{FILE}.json", "r+", encoding="utf-8") as json_file:
     data = json.load(json_file)
     data.update(links_for_bd)
 
