@@ -1,7 +1,7 @@
 from requests_html import HTMLSession
 import json
 
-url_start = "https://github.com/ceo-py/JavaScript"
+url_start = "https://github.com/ceo-py/JS-Front-End"
 session = HTMLSession()
 FILE_EXTENSION = '.js'
 FILE = "js"
