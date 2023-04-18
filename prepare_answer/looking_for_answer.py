@@ -1,6 +1,6 @@
 from database.data_base import db_
 from text_cleaning.string_cleaning import StringCleaning as Sc
-
+from string import capwords
 
 async def look_for_answer(question: str, language: str, skip_moduls: object) -> str:
     search_for = await Sc.clean_input(question)
@@ -8,12 +8,12 @@ async def look_for_answer(question: str, language: str, skip_moduls: object) -> 
     result = []
 
     for show in find_tasks:
-
+        number, title = show['task name'].split('_')[0],  capwords((' ').join(show['task name'].split('_')[1:]))
         if sum(len(x) for x in result) <= 3650 and not exams(
             show["task url"], skip_moduls.exam
         ):
             result.append(
-                f"[{await Sc.prepare_text_for_output(show['task name'])}]({show['task url']})"
+                f"{number}. [{title}]({show['task url']})"
             )
         else:
             break
