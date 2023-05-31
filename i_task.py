@@ -23,7 +23,7 @@ client = PersistentViewBot()
 
 @client.event
 async def on_ready():
-    await client.tree.sync()
+    # await client.tree.sync() once only to sync add/remove new slash command
     await client.change_presence(activity=discord.Game(name="On your demand!!!"))
     print("Ready")
 
@@ -191,6 +191,43 @@ async def itask(interaction: discord.Interaction):
     await interaction.user.send(
         embed=embed, view=LanguageSearchingButtons()
     )
+
+
+@client.tree.command(
+    name="logsolution", description="Possible solutions to sing in SoftUni web site."
+)
+async def logsolution(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="Преложения за логване в сайта на СофтУни при проблем.",
+        description="Ако сте сигурни, че сайта които се опитвате да достъпите не е в профилактика опитайте следното.",
+        colour=discord.Colour.gold(),
+    )
+    embed.set_thumbnail(
+        url="https://cdn.discordapp.com/attachments/983670671647313930/1061681874239500358/pngegg_1.png"
+    )
+    embed.add_field(
+        name="**Отворете с друг Браузър**",
+        value="Примерно ако ползвате Google Chrome опитайте да го отворите с някой от следните браузъри: Firefox, Microsoft Edge, Opera, Brave etc."
+              "Ако няма промяна преминете към следващата стъпка.",
+        inline=False,
+    )
+    embed.add_field(
+        name="**Изтрийте бисквитките/кеша от вашия Браузър**",
+        value="Инструкция за изтриване на бисквитки/кеш за следните браузъри може да намерите както следва:\n"
+              "[Google - Chrome](https://support.google.com/accounts/answer/32050?hl=en&co=GENIE.Platform%3DDesktop&oco=1)\n"
+              "[Firefox - Mozilla](https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox)\n"
+              "[Microsoft - Edge](https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09#:~:text=Select%20Settings%20%3E%20Privacy%2C%20search%2C,and%20then%20select%20Clear%20now.)\n"
+              "[Opera](https://blogs.opera.com/tips-and-tricks/2023/04/clean-browser-and-remove-trackers/)\n"
+              "[Brave](https://brave.com/learn/how-to-delete-search-history/#:~:text=Delete%20your%20browsing%20history%20on%20Brave&text=Open%20Brave.,history%20you%20want%20to%20delete.)\n"
+              "Ако ползвате браузър коите не е от описаните натиснете [ТУК](https://www.google.com/search?q=how+to+delete+cookies&sxsrf=APwXEdeThaeaVJLjI74rlNherH-PtIhs6g%3A1685523670790&ei=1gx3ZOnlL4mUxc8P-4qF6A0&ved=0ahUKEwjpqKH9mJ__AhUJSvEDHXtFAd0Q4dUDCBA&uact=5&oq=how+to+delete+cookies&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIHCAAQigUQQzIGCAAQBxAeMgUIABCABDIGCAAQBxAeMgcIABCKBRBDMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6CggAEEcQ1gQQsANKBAhBGABQgwRYgwRgsghoAnABeACAAWCIAWCSAQExmAEAoAEBwAEByAEI&sclient=gws-wiz-serp) и напишете неговото име.",
+        inline=False,
+    )
+    embed.add_field(
+        name="**Все още не може да се логнете**",
+        value="Тук ще намерите начините за контакт със СофтУни https://discord.com/channels/954298970799243285/954298972158173211",
+        inline=False,
+    )
+    await interaction.response.send_message(embed=embed)
 
 
 @client.command()
