@@ -198,8 +198,8 @@ async def itask(interaction: discord.Interaction):
 )
 async def logsolution(interaction: discord.Interaction):
     embed = discord.Embed(
-        title="Преложения за логване в сайта на СофтУни при проблем.",
-        description="Ако сте сигурни, че сайта които се опитвате да достъпите не е в профилактика опитайте следното.",
+        title="Предложения за логване в сайта на СофтУни при проблем.",
+        description="Ако сте сигурни, че сайта който се опитвате да достъпите не е в профилактика, опитайте следното:",
         colour=discord.Colour.gold(),
     )
     embed.set_thumbnail(
@@ -207,8 +207,8 @@ async def logsolution(interaction: discord.Interaction):
     )
     embed.add_field(
         name="**Отворете с друг Браузър**",
-        value="Примерно ако ползвате Google Chrome опитайте да го отворите с някой от следните браузъри: Firefox, Microsoft Edge, Opera, Brave etc."
-              "Ако няма промяна преминете към следващата стъпка.",
+        value="Примерно ползвате Google Chrome опитайте да го отворите с някой от следните браузъри: Firefox, Microsoft Edge, Opera, Brave etc."
+              "Проблема продължава опитайте:",
         inline=False,
     )
     embed.add_field(
@@ -219,7 +219,7 @@ async def logsolution(interaction: discord.Interaction):
               "[Microsoft - Edge](https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09#:~:text=Select%20Settings%20%3E%20Privacy%2C%20search%2C,and%20then%20select%20Clear%20now.)\n"
               "[Opera](https://blogs.opera.com/tips-and-tricks/2023/04/clean-browser-and-remove-trackers/)\n"
               "[Brave](https://brave.com/learn/how-to-delete-search-history/#:~:text=Delete%20your%20browsing%20history%20on%20Brave&text=Open%20Brave.,history%20you%20want%20to%20delete.)\n"
-              "Ако ползвате друг от изброени по-горе потърсете в гугал как точно да го направите за вашия браузър.",
+              "Ползвате друг браузър от изброените по-горе потърсете в гугъл.",
         inline=False,
     )
     embed.add_field(
