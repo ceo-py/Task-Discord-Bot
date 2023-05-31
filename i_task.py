@@ -23,7 +23,7 @@ client = PersistentViewBot()
 
 @client.event
 async def on_ready():
-    # await client.tree.sync() once only to sync add/remove new slash command
+    # await client.tree.sync() # once only to sync add/remove new slash command
     await client.change_presence(activity=discord.Game(name="On your demand!!!"))
     print("Ready")
 
@@ -219,7 +219,7 @@ async def logsolution(interaction: discord.Interaction):
               "[Microsoft - Edge](https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09#:~:text=Select%20Settings%20%3E%20Privacy%2C%20search%2C,and%20then%20select%20Clear%20now.)\n"
               "[Opera](https://blogs.opera.com/tips-and-tricks/2023/04/clean-browser-and-remove-trackers/)\n"
               "[Brave](https://brave.com/learn/how-to-delete-search-history/#:~:text=Delete%20your%20browsing%20history%20on%20Brave&text=Open%20Brave.,history%20you%20want%20to%20delete.)\n"
-              "Ако ползвате браузър коите не е от описаните натиснете [ТУК](https://www.google.com/search?q=how+to+delete+cookies&sxsrf=APwXEdeThaeaVJLjI74rlNherH-PtIhs6g%3A1685523670790&ei=1gx3ZOnlL4mUxc8P-4qF6A0&ved=0ahUKEwjpqKH9mJ__AhUJSvEDHXtFAd0Q4dUDCBA&uact=5&oq=how+to+delete+cookies&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIHCAAQigUQQzIGCAAQBxAeMgUIABCABDIGCAAQBxAeMgcIABCKBRBDMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6CggAEEcQ1gQQsANKBAhBGABQgwRYgwRgsghoAnABeACAAWCIAWCSAQExmAEAoAEBwAEByAEI&sclient=gws-wiz-serp) и напишете неговото име.",
+              "Ако ползвате друг от изброени по-горе потърсете в гугал как точно да го направите за вашия браузър.",
         inline=False,
     )
     embed.add_field(
