@@ -203,7 +203,7 @@ async def logsolution(interaction: discord.Interaction):
         colour=discord.Colour.gold(),
     )
     embed.set_thumbnail(
-        url="https://cdn.discordapp.com/attachments/983670671647313930/1061681874239500358/pngegg_1.png"
+        url="https://cdn.discordapp.com/attachments/983670671647313930/1113488543235453061/pngwing.com.png"
     )
     embed.add_field(
         name="**Отворете с друг Браузър**",
