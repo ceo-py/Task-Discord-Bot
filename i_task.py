@@ -188,9 +188,14 @@ async def percent(interaction: discord.Interaction):
 async def itask(interaction: discord.Interaction):
     embed = embed_for_itask()
 
-    await interaction.user.send(
+    await interaction.response.send_message(
         embed=embed, view=LanguageSearchingButtons()
     )
+
+    # responses in channel
+    # await interaction.user.send(
+    #     embed=embed, view=LanguageSearchingButtons()
+    # )
 
 
 @client.tree.command(
