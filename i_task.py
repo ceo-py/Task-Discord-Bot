@@ -3,7 +3,7 @@ from discord.ext import commands
 from buttons.searching_task_buttons import LanguageSearchingButtons
 from buttons.language_buttons import LanguageButtons, discord, os
 from prepare_answer.generate_message import show_result_message
-from show_task.show_task import ShowTask
+# from show_task.show_task import ShowTask
 from stats.add_stats_json import load_stats
 from select_menus.select import Select, exams
 
@@ -20,7 +20,7 @@ class PersistentViewBot(commands.Bot):
 
 
 client = PersistentViewBot()
-ST = ShowTask()
+# ST = ShowTask()
 
 
 @client.event
