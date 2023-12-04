@@ -4,6 +4,12 @@ Discord bot that will give you answers on coding tasks that take place in SoftUn
 You can copy the task name from https://judge.softuni.org/ and pm the bot with that name, he will provide you the answer code in python, java, c#, js, mssql and html & css.
 Full functionality check [here](https://www.ceo-py.eu/DiscordBot/)
 
+
+Your Feedback Matters: Help Shape the Future of Itask Bot
+We're always looking for ways to improve our bot and make it even more helpful and engaging for our users. 
+That's why we're inviting you to share your feedback and suggestions. [here](https://github.com/ceo-py/Task-Discord-Bot/discussions).
+
+
 Installation:
 
 All you have to do is invite the bot to your discord server and be in a server where the bot is present.
