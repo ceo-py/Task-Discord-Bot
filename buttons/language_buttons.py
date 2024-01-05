@@ -42,6 +42,15 @@ class LanguageButtons(discord.ui.View):
         await button.response.send_modal(AddTaskModal("js"))
 
     @discord.ui.button(
+        label="C++",
+        style=discord.ButtonStyle.gray,
+        custom_id="8",
+        emoji="<:cpp:1192752241887682670>",
+    )
+    async def cpp(self, button: discord.ui.Button, interaction: discord.Interaction):
+        await button.response.send_modal(AddTaskModal("cpp"))
+
+    @discord.ui.button(
         label="HTML CSS",
         style=discord.ButtonStyle.gray,
         custom_id="6",
@@ -60,3 +69,5 @@ class LanguageButtons(discord.ui.View):
     )
     async def mssql(self, button: discord.ui.Button, interaction: discord.Interaction):
         await button.response.send_modal(AddTaskModal("mssql"))
+
+

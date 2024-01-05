@@ -3,7 +3,6 @@ from discord.ext import commands
 from buttons.searching_task_buttons import LanguageSearchingButtons
 from buttons.language_buttons import LanguageButtons, discord, os
 from prepare_answer.generate_message import show_result_message
-# from show_task.show_task import ShowTask
 from stats.add_stats_json import load_stats
 from select_menus.select import Select, exams
 
@@ -12,7 +11,7 @@ class PersistentViewBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.all()
 
-        super().__init__(command_prefix="?", help_command=None, intents=intents)
+        super().__init__(command_prefix="!", help_command=None, intents=intents)
 
     async def setup_hook(self) -> None:
         self.add_view(LanguageButtons())
@@ -20,7 +19,6 @@ class PersistentViewBot(commands.Bot):
 
 
 client = PersistentViewBot()
-# ST = ShowTask()
 
 
 @client.event
@@ -42,7 +40,7 @@ async def add(ctx):
         )
 
 
-@client.command(aliases=["py", "cs", "java", "js", "html", "mssql"])
+@client.command(aliases=["py", "cs", "java", "js", "html", "mssql", "cpp"])
 async def task(ctx, *task):
     if ctx.invoked_with == "task":
         await ctx.author.send(embed=embed_for_itask(), view=LanguageSearchingButtons())
@@ -69,7 +67,8 @@ async def help(ctx):
         name=f"?py task name - for Python\n?cs task name - for C#\n"
              f"?java task name - for Java\n"
              f"?js task name - for JavaScript\n"
-             f"?html task name - for html and css\n"
+             f"?cpp task name - for C++\n"
+             f"?html task name - for HTML & CSS\n"
              f"?mssql task name - for MS-MSQL",
         value=f"```fix\nWhen you ask me for a task by its full name "
               f"(or at least part of its name) I will search for it and show you the results. "
@@ -259,9 +258,10 @@ def embed_for_itask():
         title="Показвам примерни решения на задачите от СофтУни!",
         description="Изберете езика за който желаете да намерите пример и напишете името на задача.\n"
                     "Ако желаете може да ми задавате въпроси на лично съобщение <@970393820497838180> с команда за съответния език "
-                    "`?py`, `?cs`, `?java`, `?js`, `?html` или `?mssql` и името на задачата.",
+                    "`?py`, `?cs`, `?java`, `?js`, `?html`, `?cpp` или `?mssql` и името на задачата.",
         colour=discord.Colour.gold(),
     )
+    embed.add_field(name="Powered by", value="[ICode-Example](https://icode-example.ceo-py.eu)")
     return embed
 
 
@@ -272,6 +272,7 @@ def embed_for_itask_exam():
                     "Благодаря за разбирането и успех на изпита!",
         colour=discord.Colour.red(),
     )
+    embed.add_field(name="Powered by", value="[ICode-Example](https://icode-example.ceo-py.eu)")
     return embed
 
 

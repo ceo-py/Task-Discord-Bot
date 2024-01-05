@@ -1,4 +1,5 @@
 import os
+import re
 import pymongo
 from urllib.parse import quote_plus
 from dotenv import load_dotenv
@@ -43,7 +44,7 @@ class DataBaseInfo(Singleton):
         )
 
     async def find_tasks(self, language: str, task_name: str):
-        return list(self.all_tasks(language).find({"task name": {"$regex": task_name}}))
+        return list(self.all_tasks(language).find({"task name": {"$regex": re.compile(task_name, re.IGNORECASE)}}))
 
 
 db_ = DataBaseInfo()

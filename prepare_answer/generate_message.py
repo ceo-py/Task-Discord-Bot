@@ -35,6 +35,10 @@ LANGUAGE_DATA = {
         "thumbnail url": "https://github.com/ceo-py/Project-Pictures/blob/main/Itask/mssql_lang_icon.png?raw=true",
         "data": "mssql",
     },
+    "cpp": {
+        "thumbnail url": "https://github.com/ceo-py/Project-Pictures/blob/3f6b24b9bef4748f3b78865b123c45f200aa0989/Itask/cpp_icon.png?raw=true",
+        "data": "cpp",
+    },
 }
 
 
@@ -52,6 +56,7 @@ async def show_result_message(task, language, skip_moduls):
             description=f"{respond}",
         )
         embed.set_thumbnail(url=LANGUAGE_DATA[language]["thumbnail url"])
+        embed.add_field(name="Powered by", value="[ICode-Example](https://icode-example.ceo-py.eu)")
 
     else:
         embed = discord.Embed(
