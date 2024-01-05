@@ -11,7 +11,7 @@ class PersistentViewBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.all()
 
-        super().__init__(command_prefix="!", help_command=None, intents=intents)
+        super().__init__(command_prefix="?", help_command=None, intents=intents)
 
     async def setup_hook(self) -> None:
         self.add_view(LanguageButtons())
@@ -119,7 +119,14 @@ async def rounding(interaction: discord.Interaction):
                     "let x = 3.14159;\n"
                     "console.log(x.toFixed(2)); // 3.14\n"
                     "console.log(Math.floor(x)); // 3\n"
-                    "console.log(Math.ceil(x)); // 4```\n",
+                    "console.log(Math.ceil(x)); // 4```\n"
+                    "**C++**```js\n"
+                    "#include <iostream>\n"
+                    "#include <cmath>\n"
+                    "double x = 3.14159;\n"
+                    "td::cout << std::fixed << std::setprecision(2) << x << std::endl; // 3.14\n"
+                    "std::cout << std::floor(x) << std::endl; // 3\n"
+                    "std::cout << std::ceil(x) << std::endl; // 4```\n",
         colour=discord.Colour.gold(),
     )
     embed.set_thumbnail(
