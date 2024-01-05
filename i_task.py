@@ -130,7 +130,6 @@ async def rounding(interaction: discord.Interaction):
         colour=discord.Colour.gold(),
     )
     embed.set_thumbnail(
-        # url="https://cdn.discordapp.com/attachments/983670671647313930/1068903570335879318/rounding_23.png"
         url="https://github.com/ceo-py/Project-Pictures/blob/main/Itask/rounding_23.png?raw=true"
     )
     await interaction.response.send_message(embed=embed)
